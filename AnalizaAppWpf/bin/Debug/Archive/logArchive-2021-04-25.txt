@@ -1,0 +1,5 @@
+2021-04-24 09:04:16.3248| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-24 09:04:16.3757| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-24 09:04:18.2378| INFO|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogInfo Raporty Miesieczne za 202103
+2021-04-24 09:04:18.2458| INFO|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogInfo Ilosc sklepow 60
+2021-04-24 09:04:21.4872| INFO|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogInfo Grupowanie fiskal:14011         oracle:43316

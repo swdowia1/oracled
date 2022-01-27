@@ -1,0 +1,3 @@
+2021-04-30 12:27:27.7616| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-30 12:27:27.8106| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-30 12:27:28.2255| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210429.csv

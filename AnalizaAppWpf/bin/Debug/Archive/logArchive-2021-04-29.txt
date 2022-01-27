@@ -1,0 +1,161 @@
+2021-04-28 07:38:30.1899| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 07:38:30.2388| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 07:38:48.0836| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:38:48.0867| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:38:48.0867| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 07:38:48.0867| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210426.csv
+2021-04-28 07:38:48.0867| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:38:48.1011| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:40:08.1387| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:40:08.1387| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:40:08.1387| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 07:40:08.1387| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210422.csv
+2021-04-28 07:40:08.1387| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:40:08.1466| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 07:42:09.5399| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 07:42:09.5788| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 07:42:10.0232| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku \\ccc-v444\Statystyka\statystyka_20210427.csv
+2021-04-28 08:16:12.3130| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 08:16:12.3678| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 08:16:13.2954| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:13.2954| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:13.2954| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 08:16:13.2954| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210427.csv
+2021-04-28 08:16:13.2954| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:13.2954| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:28.9464| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:28.9464| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:28.9512| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 08:16:28.9512| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210426.csv
+2021-04-28 08:16:28.9512| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:28.9512| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:31.2202| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:31.2202| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:31.2202| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 08:16:31.2202| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210425.csv
+2021-04-28 08:16:31.2202| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:31.2202| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:33.5630| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:33.5630| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:33.5630| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 08:16:33.5630| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210424.csv
+2021-04-28 08:16:33.5630| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:33.5630| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:35.6819| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:35.6849| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:35.6849| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 08:16:35.6849| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210423.csv
+2021-04-28 08:16:35.6849| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:35.6849| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:37.7517| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:37.7517| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:37.7517| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 08:16:37.7517| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210422.csv
+2021-04-28 08:16:37.7517| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:37.7517| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:39.9865| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:39.9865| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:39.9865| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Testowanie unikalny SklepStanowiskoRaportaunikalny
+2021-04-28 08:16:39.9865| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210421.csv
+2021-04-28 08:16:39.9865| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 08:16:39.9865| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn ====================================================================================================
+2021-04-28 12:37:17.9562| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 12:37:18.0070| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 12:58:27.6876| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 12:58:27.8252| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 12:58:28.5293| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210331.csv
+2021-04-28 12:59:49.3386| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 12:59:49.3865| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 12:59:59.4518| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210331.csv
+2021-04-28 13:07:03.6988| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:07:03.7527| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:07:06.5756| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210331.csv
+2021-04-28 13:08:31.6442| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w C:\dyskD\wywal\testScan\Stat\statystyka_20210308.csv
+2021-04-28 13:08:31.9524|ERROR|classFun.SummaryAll => classFun.OracleFile => classLog.LogException Indeks wykracza³ poza granice tablicy.
+   w AnalizaDll.classFun.OracleFile(String oracleFile) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 1112
+2021-04-28 13:08:34.7377|ERROR|MainWindow.GetData => classFun.SummaryAll => classLog.LogException Indeks wykracza³ poza granice tablicy.
+   w AnalizaDll.classFun.OracleFile(String oracleFile) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 1120
+   w AnalizaDll.classFun.SummaryAll(String katalog, String data) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 963
+2021-04-28 13:08:59.4791| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w C:\dyskD\wywal\testScan\Stat\statystyka_20210309.csv
+2021-04-28 13:09:13.9711|ERROR|classFun.SummaryAll => classFun.OracleFile => classLog.LogException Indeks wykracza³ poza granice tablicy.
+   w AnalizaDll.classFun.OracleFile(String oracleFile) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 1112
+2021-04-28 13:09:25.5756|ERROR|MainWindow.GetData => classFun.SummaryAll => classLog.LogException Indeks wykracza³ poza granice tablicy.
+   w AnalizaDll.classFun.OracleFile(String oracleFile) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 1120
+   w AnalizaDll.classFun.SummaryAll(String katalog, String data) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 963
+2021-04-28 13:09:34.1501| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w C:\dyskD\wywal\testScan\Stat\statystyka_20210308.csv
+2021-04-28 13:28:21.5874| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:28:21.6512| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:28:22.1788| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210406.csv
+2021-04-28 13:29:29.5285| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w C:\dyskD\wywal\testScan\Stat\statystyka_20210308.csv
+2021-04-28 13:31:26.7916| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:31:26.8365| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:31:27.3501| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210406.csv
+2021-04-28 13:31:29.3803|ERROR|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogException Nie mo¿na odnaleŸæ czêœci œcie¿ki „C:\dyskD\wywal\testScan\Miesiac\miesiacNpos_202103.csv”.
+   w System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   w System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding)
+   w System.IO.File.InternalReadAllLines(String path, Encoding encoding)
+   w System.IO.File.ReadAllLines(String path)
+   w AnalizaDll.classFun.RaportMiesiac(String monthPrev, String statystykaMiesiac) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 292
+2021-04-28 13:31:46.5085|ERROR|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogException Nie mo¿na odnaleŸæ czêœci œcie¿ki „C:\dyskD\wywal\testScan\Miesiac\miesiacNpos_202103.csv”.
+   w System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   w System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding)
+   w System.IO.File.InternalReadAllLines(String path, Encoding encoding)
+   w System.IO.File.ReadAllLines(String path)
+   w AnalizaDll.classFun.RaportMiesiac(String monthPrev, String statystykaMiesiac) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 292
+2021-04-28 13:32:41.4439| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:32:41.5048| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:32:42.1790| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210406.csv
+2021-04-28 13:32:43.2480|ERROR|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogException Nie mo¿na odnaleŸæ czêœci œcie¿ki „C:\dyskD\wywal\testScan\Miesiac\miesiacNpos_202103.csv”.
+   w System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   w System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding)
+   w System.IO.File.InternalReadAllLines(String path, Encoding encoding)
+   w System.IO.File.ReadAllLines(String path)
+   w AnalizaDll.classFun.RaportMiesiac(String monthPrev, String statystykaMiesiac) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 292
+2021-04-28 13:33:07.5081| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:33:07.5729| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:33:08.3678| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210406.csv
+2021-04-28 13:34:21.1702| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:34:21.2221| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:34:21.7891| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210406.csv
+2021-04-28 13:35:40.0342| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:35:40.0851| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:35:40.8291| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210406.csv
+2021-04-28 13:50:10.9295| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 13:50:11.0043| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 13:50:11.6860| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210406.csv
+2021-04-28 14:05:49.6282|ERROR|MainWindow..ctor => classWinUI.MessageError => classLog.LogError Brak plik C:\dyskD\wywal\testScan\Stat\
+2021-04-28 14:07:01.1732| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 14:07:01.2460| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 14:07:01.9351| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210427.csv
+2021-04-28 14:07:03.3060|ERROR|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogException Nie mo¿na odnaleŸæ pliku 'C:\dyskD\wywal\testScan\Stat\Miesiac\miesiacNpos_202103.csv'.
+   w System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   w System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding)
+   w System.IO.File.InternalReadAllLines(String path, Encoding encoding)
+   w System.IO.File.ReadAllLines(String path)
+   w AnalizaDll.classFun.RaportMiesiac(String monthPrev, String statystykaMiesiac) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 292
+2021-04-28 14:07:22.9074| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210426.csv
+2021-04-28 14:07:24.1169|ERROR|Miesiac..ctor => classFun.RaportMiesiac => classLog.LogException Nie mo¿na odnaleŸæ pliku 'C:\dyskD\wywal\testScan\Stat\Miesiac\miesiacNpos_202103.csv'.
+   w System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   w System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding)
+   w System.IO.File.InternalReadAllLines(String path, Encoding encoding)
+   w System.IO.File.ReadAllLines(String path)
+   w AnalizaDll.classFun.RaportMiesiac(String monthPrev, String statystykaMiesiac) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 292
+2021-04-28 14:07:54.3555| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 14:07:54.3984| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-28 14:07:54.9913| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210427.csv
+2021-04-28 14:30:34.7646| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Nie wygenerowano pliku C:\dyskD\wywal\testScan\Stat\statystyka_20210408.csv

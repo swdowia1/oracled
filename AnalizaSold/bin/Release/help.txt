@@ -1,0 +1,19 @@
+
+Program GenerateStatistic [wersja:12.0.0.0]
+Odczytujemy dane z bazy:DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=swdowiak;
+Zapisujemy wynik katalogu C:\dyskD\wywal\testScan\Stat\
+Program z parametrem h[H]	opis programu
+Program z parametrem yyyyMMdd	zapis do pliku C:\dyskD\wywal\testScan\Stat\statystykaOracle_yyyyMMdd.csv
+Program z parametrem g 3	generowanie plików na 3 dni wstecz
+Program z parametrem m[M]	raport miesieczny za 2021 marzec
+			zapisujemy w C:\dyskD\wywal\testScan\Stat\Miesiac\
+Program z parametrem s połączenie	szyfrowanie hasla
+	 parametr połączenie podajemy w cudzysłowiach np:
+AnalizaSold.exe s "DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=użytkownik;PASSWORD=haslo;PERSIST SECURITY INFO=True;"
+Historia zmian:
+10.0.0.0:
+	-HalfPrice
+11.0.0.0:
+	-Raporty miesieczne
+12.0.0.0:
+	-Powielone kwoty w raporcie miesiecznym

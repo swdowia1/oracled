@@ -1,0 +1,112 @@
+2021-04-26 09:26:15.1126| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:26:31.4211| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:29:13.7956| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:29:13.8315| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marna wsystkie daty
+2021-04-26 09:29:13.8365| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-26 09:29:13.8365| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-26 09:29:13.8365| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-26 09:29:13.8365| WARN|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogWarn Brak plików za 202103 w katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-26 09:29:34.7391| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:29:47.5703| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marna wsystkie daty
+2021-04-26 09:31:19.9017| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:31:41.3875| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marna wsystkie daty
+2021-04-26 09:31:44.0870| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-26 09:31:44.0870| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-26 09:31:44.0870| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-26 09:31:49.8963| WARN|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogWarn Brak plików za 202103 w katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-26 09:32:10.1383| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:32:14.0631| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marna wsystkie daty
+2021-04-26 09:34:54.6343| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:34:54.6712| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marna wsystkie daty
+2021-04-26 09:34:54.6712| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo \\ccc-v444\Statystyka\
+2021-04-26 09:34:54.6712| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-26 09:34:54.6712| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-26 09:36:11.4274| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:36:11.4649| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marna wsystkie daty
+2021-04-26 09:36:11.4649| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo \\ccc-v444\Statystyka\
+2021-04-26 09:36:11.4649| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-26 09:36:11.4649| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-26 09:36:25.0300| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:36:25.0681| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marna wsystkie daty
+2021-04-26 09:36:25.0721| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo \\ccc-v444\Statystyka\
+2021-04-26 09:36:25.0721| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-26 09:36:25.0721| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-26 09:37:04.4887| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:38:01.9070| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:38:01.9439| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-26 09:38:01.9499| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-26 09:38:01.9499| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-26 09:38:01.9499| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-26 09:40:56.5340| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:40:56.5758| WARN|Program.Main => Program.DescribeProgram => classLog.LogWarn 
+Program AnalizaSold [wersja:11.0.0.0]
+Odczytujemy dane z bazy:DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=swdowiak;
+Zapisujemy wynik katalogu C:\dyskD\wywal\testScan\Stat\
+Program z parametrem h	opis programu
+Program z parametrem yyyyMMdd	zapis do pliku C:\dyskD\wywal\testScan\Stat\statystykaOracle_yyyyMMdd.csv
+Program z parametrem g 3	generowanie plików na 3 dni wstecz
+Program z parametrem s po³¹czenie	szyfrowanie hasla
+	 parametr po³¹czenie podajemy w cudzys³owiach np:
+AnalizaSold.exe s "DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=u¿ytkownik;PASSWORD=haslo;PERSIST SECURITY INFO=True;"
+Historia zmian:
+10.0.0.0:
+	-HalfPrice
+11.0.0.0:
+	-Raporty miesieczne
+
+2021-04-26 09:45:11.2110| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:45:11.2549| WARN|Program.Main => Program.DescribeProgram => classLog.LogWarn 
+Program AnalizaSold [wersja:11.0.0.0]
+Odczytujemy dane z bazy:DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=swdowiak;
+Zapisujemy wynik katalogu C:\dyskD\wywal\testScan\Stat\
+Program z parametrem h[H]	opis programu
+Program z parametrem yyyyMMdd	zapis do pliku C:\dyskD\wywal\testScan\Stat\statystykaOracle_yyyyMMdd.csv
+Program z parametrem g 3	generowanie plików na 3 dni wstecz
+Program z parametrem s po³¹czenie	szyfrowanie hasla
+Program z parametrem m[M] raport miesieczny za 2021 marzec
+	 parametr po³¹czenie podajemy w cudzys³owiach np:
+AnalizaSold.exe s "DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=u¿ytkownik;PASSWORD=haslo;PERSIST SECURITY INFO=True;"
+Historia zmian:
+10.0.0.0:
+	-HalfPrice
+11.0.0.0:
+	-Raporty miesieczne
+
+2021-04-26 09:50:23.2723| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:50:23.3182| WARN|Program.Main => Program.DescribeProgram => classLog.LogWarn 
+Program AnalizaSold [wersja:11.0.0.0]
+Odczytujemy dane z bazy:DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=swdowiak;
+Zapisujemy wynik katalogu C:\dyskD\wywal\testScan\Stat\
+Program z parametrem h[H]	opis programu
+Program z parametrem yyyyMMdd	zapis do pliku C:\dyskD\wywal\testScan\Stat\statystykaOracle_yyyyMMdd.csv
+Program z parametrem g 3	generowanie plików na 3 dni wstecz
+Program z parametrem s po³¹czenie	szyfrowanie hasla
+Program z parametrem m[M] raport miesieczny za 2021 marzec
+	 parametr po³¹czenie podajemy w cudzys³owiach np:
+AnalizaSold.exe s "DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=u¿ytkownik;PASSWORD=haslo;PERSIST SECURITY INFO=True;"
+Historia zmian:
+10.0.0.0:
+	-HalfPrice
+11.0.0.0:
+	-Raporty miesieczne
+
+2021-04-26 09:51:49.9031| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 09:51:49.9461| WARN|Program.Main => Program.DescribeProgram => classLog.LogWarn 
+Program AnalizaSold [wersja:11.0.0.0]
+Odczytujemy dane z bazy:DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=swdowiak;
+Zapisujemy wynik katalogu C:\dyskD\wywal\testScan\Stat\
+Program z parametrem h[H]	opis programu
+Program z parametrem yyyyMMdd	zapis do pliku C:\dyskD\wywal\testScan\Stat\statystykaOracle_yyyyMMdd.csv
+Program z parametrem g 3	generowanie plików na 3 dni wstecz
+Program z parametrem m[M]	raport miesieczny za 2021 marzec
+Program z parametrem s po³¹czenie	szyfrowanie hasla
+	 parametr po³¹czenie podajemy w cudzys³owiach np:
+AnalizaSold.exe s "DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=u¿ytkownik;PASSWORD=haslo;PERSIST SECURITY INFO=True;"
+Historia zmian:
+10.0.0.0:
+	-HalfPrice
+11.0.0.0:
+	-Raporty miesieczne
+
+2021-04-26 11:25:16.5828| INFO|Program.Main => classLog.LogInfo start 
+2021-04-26 11:25:21.4773| INFO|Program.Main => classLog.LogInfo Generowanie danych dla 20210425

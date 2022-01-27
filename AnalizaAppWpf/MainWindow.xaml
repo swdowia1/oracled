@@ -1,0 +1,254 @@
+﻿<Window x:Class="AnalizaAppWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnalizaAppWpf"
+        mc:Ignorable="d"
+        FontSize="17"
+        ContentRendered="Window_ContentRendered"
+               Title="MainWindow" Height="450" Width="1200">
+
+    <Grid   >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0">
+            <Label Content="Raport dla daty:" />
+            <ComboBox x:Name="cbData" SelectionChanged="cbData_SelectionChanged"   DisplayMemberPath="Show"         
+                      Width="230"
+                      SelectedIndex="0"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Stretch"
+              VerticalContentAlignment="Center"
+              HorizontalContentAlignment="Left"
+                      ToolTip="7 ostatnich dni"/>
+            <Label x:Name="lblIlosc" FontWeight="Bold" Content="" />
+
+            <CheckBox  Click="chkCC_Click"  Margin="10,6,0,17" x:Name="chkCC"  Content="CCC"/>
+
+
+            <CheckBox x:Name="chkHalf" Margin="10,6,0,17" Click="chkHalf_Click"  Content="HalfPrice"/>
+            <Button x:Name="btnMiesiac" Click="btnMiesiac_Click" Content="Raporty miesieczne" Margin="10,0,0,0"></Button>
+
+        </WrapPanel>
+        <DataGrid Grid.Row="1" x:Name="dgSold"                               
+        Visibility="Hidden"                       
+            AutoGenerateColumns="False"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                  
+            CanUserAddRows="False"
+           IsReadOnly="True"
+           >
+            <DataGrid.RowStyle>
+
+                <Style x:Name="Orange2" TargetType="DataGridRow">
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <TextBlock Text="{Binding ShopName}" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="Gray">
+                            <Setter Property="Background" Value="#DEE1E4"></Setter>
+                        </DataTrigger>
+
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="1*" Binding="{Binding NumerSklep}" Header="Salon" />
+                <DataGridTextColumn Width="1*" Binding="{Binding BruttoFiskalne, StringFormat={}{0:F2} }" Header="Fiskalne" />
+                <DataGridTextColumn Width="1*"  Binding="{Binding Data}" Header="Data" />
+                <DataGridTextColumn Width="1*"  Binding="{Binding BruttoNpos, StringFormat={}{0:F2} }" Header="nPOS" />
+
+                <DataGridTextColumn Width="300"  Binding="{Binding BruttoFiskalneNpos, StringFormat={}{0:F2}}" Header="Fiskalne vs nPOS">
+
+                    <DataGridTextColumn.CellStyle>
+
+                        <Style TargetType="{x:Type DataGridCell}">
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Status}" Value="Green">
+                                    <Setter Property="Foreground" Value="Green" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="Red">
+                                    <Setter Property="Foreground" Value="Red" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="Yellow">
+                                    <Setter Property="Foreground" Value="Yellow" />
+
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="Blue">
+                                    <Setter Property="Foreground" Value="Blue" />
+                                </DataTrigger>
+
+
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Width="1*"  Binding="{Binding Karta , StringFormat={}{0:F2}}" Header="Npos Karta" />
+                <DataGridTextColumn Width="1*"  Binding="{Binding Konwersja , StringFormat={}{0:F2}}" Header="Konwersja" />
+
+                <DataGridTextColumn Width="1*"  Binding="{Binding Terminal, StringFormat={}{0:F2} }" Header="Terminal" />
+                <DataGridTextColumn Width="1*"  Binding="{Binding KartaTerminal, StringFormat={}{0:F2}}" Header="Terminal vs Npos Karta">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusKarta}" Value="Red">
+                                    <Setter Property="Foreground" Value="Red" />
+                                </DataTrigger>
+
+
+
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+              
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <WrapPanel Margin="0,0,0,30" HorizontalAlignment="Left">
+                        <Button Name="btnHideRow" Click="btnHideRow_Click" Width="100"   FontSize="17" >Ukryj</Button>
+
+                        <DataGrid 
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            AutoGenerateColumns="False"
+                            Background="#88AFD1"
+                           HeadersVisibility="Column"
+                            CanUserAddRows="False" 
+                            IsReadOnly="True"
+                                
+
+                            ItemsSource="{Binding Drukarka}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn  Width="1*"  Binding="{Binding Stanowisko}" Header="Stanowisko" />
+                                <DataGridTextColumn Width="1*" Binding="{Binding BruttoFiskalne,StringFormat={}{0:F2} }" Header="Fiskalne" />
+                                <DataGridTextColumn Width="1*"  Binding="{Binding Data}" Header="Data" />
+                                <DataGridTextColumn Width="1*"  Binding="{Binding BruttoNpos,StringFormat={}{0:F2} }" Header="nPOS" />
+                                <DataGridTextColumn Width="300"  Binding="{Binding BruttoFiskalneNpos,StringFormat={}{0:F2} }" Header="Fiskalne vs nPOS">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="Green">
+                                                    <Setter Property="Foreground" Value="Green" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Red">
+                                                    <Setter Property="Foreground" Value="Red" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Yellow">
+                                                    <Setter Property="Foreground" Value="Yellow" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Blue">
+                                                    <Setter Property="Foreground" Value="Blue" />
+                                                </DataTrigger>
+
+
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="1*"  Binding="{Binding Karta,StringFormat={}{0:F2}  }" Header="Npos Karta" />
+                                <DataGridTextColumn Width="1*"  Binding="{Binding Konwersja , StringFormat={}{0:F2}}" Header="Konwersja" />
+
+                                <DataGridTextColumn Width="1*"  Binding="{Binding Terminal,StringFormat={}{0:F2}  }" Header="Terminal" />
+
+                                <DataGridTextColumn Width="1*"  Binding="{Binding KartaTerminal,StringFormat={}{0:F2} }" Header="Terminal vs Npos Karta">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding StatusKarta}" Value="Red">
+                                                    <Setter Property="Foreground" Value="Red" />
+                                                </DataTrigger>
+
+
+
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                             
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </WrapPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+        <TextBlock Grid.Row="1"
+  x:Name="txtLoad"
+  Margin="20" 
+  Width="640" Height="100" FontSize="48" FontWeight="Bold" Foreground="Black">
+ Ładowanie danych.....
+
+  <!-- Animates the text block's opacity. -->
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+
+                            <DoubleAnimation
+            Storyboard.TargetName="txtLoad" 
+            Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                
+            From="1.0" To="0.0" Duration="0:0:0.3"  
+            AutoReverse="True" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <Grid Grid.Row="2" VerticalAlignment="Center"  >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" ></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="210" MinWidth="300"/>
+                <ColumnDefinition Width="450"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"  Content="Filtr lista sklepów" />
+            <TextBox Grid.Column="1" x:Name="txtFilter" KeyUp="txtFilter_KeyUp" Width="100"     />
+
+
+            <Border  Grid.Column="2"  >
+                <StackPanel>
+                    <CheckBox x:Name="chkNotZero" Click="chkNotZero_Click" Width="400" Content="Fiskalne vs nPOS różne od 0  "/>
+                    <CheckBox x:Name="chkNotSold" Click="chkNotSold_Click" Content="Otwarte sklepy bez sprzedaży  "/>
+                </StackPanel>
+
+            </Border>
+            <Border   Grid.Column="3" Background="GhostWhite" BorderBrush="Black" BorderThickness="1" CornerRadius="8,8,3,3">
+
+                <WrapPanel x:Name="wpRB"  VerticalAlignment="Center"
+                       >
+
+                    <WrapPanel.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="10,10,10,10" />
+
+                        </Style>
+                        <Style TargetType="{x:Type RadioButton}">
+                            <Setter Property="Margin" Value="10,10,10,10" />
+
+                        </Style>
+                    </WrapPanel.Resources>
+
+
+                    <RadioButton x:Name="rbAll" Click="rbAll_Click">Wszystkie sklepy</RadioButton>
+                    <RadioButton x:Name="rbSelect" Click="rbSelect_Click">Wybrane sklepy</RadioButton>
+                    <Button Name="btnFilterShop"  Click="btnFilterShop_Click"   >Wybierz</Button>
+                </WrapPanel>
+            </Border>
+
+
+            <Button Grid.Column="5" x:Name="btnSave" Click="btnSave_Click"  Content="Zapisz do XLS" Margin="0,1,10,10"    />
+        </Grid>
+    </Grid>
+</Window>

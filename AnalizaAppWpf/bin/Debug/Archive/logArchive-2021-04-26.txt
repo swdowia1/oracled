@@ -1,0 +1,55 @@
+2021-04-25 08:22:11.3649| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 08:22:11.4238| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 08:22:41.8091| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 08:22:41.8650| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 08:32:37.3247| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 08:32:37.3716| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 08:34:01.5326| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 08:34:01.5760| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 08:35:41.4149| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 08:35:41.4648| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 08:43:04.6670| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 08:43:04.7199| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:09:06.6773| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:09:06.7192| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:10:24.4524| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:10:24.4923| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:20:22.5338| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:20:22.6175| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:24:45.3665| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:24:45.4253| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:27:09.7696| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:27:09.8195| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:34:34.9163| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:34:34.9692| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:37:06.2125| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:37:06.2644| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:38:44.1654| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:38:44.2118| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:43:15.3135| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:43:15.3554| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 12:46:36.8582| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 12:46:36.9041| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 14:37:39.9725| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 14:37:40.0214| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 14:38:20.3526| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 14:38:20.3970| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 14:39:56.9191| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 14:39:56.9719| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 14:55:34.5064| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 14:55:34.5503| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 14:59:03.6413| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 14:59:03.6982| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 15:00:08.6126| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 15:00:08.6605| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 15:01:31.8164| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 15:01:31.8852| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 15:01:38.1276|ERROR|Miesiac.btnSave_Click => classExcel.CreateExcel => classLog.LogException Error overwriting file C:\Users\swdowiak\Desktop\miesiac.xlsx
+   w OfficeOpenXml.ExcelPackage.Save()
+   w OfficeOpenXml.ExcelPackage.SaveAs(FileInfo file)
+   w AnalizaDll.classExcel.CreateExcel(List`1 Sklepy, String fileName) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classExcel.cs:wiersz 69
+Proces nie mo¿e uzyskaæ dostêpu do pliku „C:\Users\swdowiak\Desktop\miesiac.xlsx”, poniewa¿ jest on u¿ywany przez inny proces.
+2021-04-25 15:09:28.5932| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 15:09:28.6341| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-25 15:10:32.4295| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-25 15:10:32.4814| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\

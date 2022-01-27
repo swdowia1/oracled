@@ -1,0 +1,17 @@
+2021-04-28 10:44:10.7337| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 10:44:10.7881| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 12:36:24.6008| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 12:36:24.6667| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 12:36:25.5726| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210427.csv
+2021-04-28 12:36:29.6432| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210426.csv
+2021-04-28 12:36:32.1202| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210427.csv
+2021-04-28 12:36:57.8512| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 12:36:57.8990| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 12:36:58.8994| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210427.csv
+2021-04-28 12:37:01.8280| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210426.csv
+2021-04-28 12:48:53.5706| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 12:48:53.6065| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 12:48:53.8920| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210427.csv
+2021-04-28 15:32:07.0046| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-28 15:32:07.0395| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-28 15:32:07.3324| WARN|classFun.FiskalFile => classFun.SklepStanowiskoRaportaunikalny => classLog.LogWarn Brak powielonych w \\ccc-v444\Statystyka\statystyka_20210427.csv

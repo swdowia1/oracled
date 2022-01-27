@@ -1,0 +1,50 @@
+2021-04-27 17:18:07.4087| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 17:18:07.4536| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 17:18:08.0251| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn C:\dyskD\wywal\testScan\Stat\statystyka_20210426.csv 2
+2021-04-27 17:18:10.7740| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 17:18:41.9800| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 17:18:42.0308| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-27 17:18:42.7399| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn \\ccc-v444\Statystyka\statystyka_20210426.csv 0
+2021-04-27 17:18:45.2384| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 17:18:58.4764| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn \\ccc-v444\Statystyka\statystyka_20210425.csv 0
+2021-04-27 17:18:58.4863| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 17:19:06.3221| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn \\ccc-v444\Statystyka\statystyka_20210424.csv 0
+2021-04-27 17:19:06.3231| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 17:19:08.8499| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn \\ccc-v444\Statystyka\statystyka_20210423.csv 0
+2021-04-27 17:19:08.8499| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 17:19:10.6447| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn \\ccc-v444\Statystyka\statystyka_20210422.csv 0
+2021-04-27 17:19:10.6895| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 17:19:13.0046| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn \\ccc-v444\Statystyka\statystyka_20210421.csv 0
+2021-04-27 17:19:13.0046| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 17:19:14.8093| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn \\ccc-v444\Statystyka\statystyka_20210420.csv 0
+2021-04-27 17:19:14.8093| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 19:07:17.4586| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:07:17.5054| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 19:07:18.0530| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn C:\dyskD\wywal\testScan\Stat\statystyka_20210426.csv 2
+2021-04-27 19:07:18.0560| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 19:14:05.9386| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:14:06.0234| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 19:14:08.8791| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn C:\dyskD\wywal\testScan\Stat\statystyka_20210426.csv 2
+2021-04-27 19:14:08.8791| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 19:14:54.7783| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:14:54.8192| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 19:19:28.8606| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:19:28.9085| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 19:22:26.7170| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:22:26.8192| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 19:22:29.5882| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn C:\dyskD\wywal\testScan\Stat\statystyka_20210426.csv 1
+2021-04-27 19:22:29.5882| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 19:23:12.2308| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn C:\dyskD\wywal\testScan\Stat\statystyka_20210426.csv 1
+2021-04-27 19:23:12.2308| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 19:27:30.8820| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:27:30.9648| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 19:27:33.9401| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn C:\dyskD\wywal\testScan\Stat\statystyka_20210426.csv 0
+2021-04-27 19:27:33.9401| WARN|classFun.SummaryAll => classFun.FiskalFile => classLog.LogWarn Podwojne
+2021-04-27 19:27:56.3872| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:27:56.4331| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 19:28:11.7826| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 19:28:11.8514| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-27 21:17:35.3822| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 21:17:35.4291| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-27 21:18:15.8399| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-27 21:18:15.8838| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\

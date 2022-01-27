@@ -1,0 +1,25 @@
+2021-04-26 06:51:54.6578| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 06:51:54.8184| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 10:13:05.0313| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 10:13:05.0722| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:04:00.3061| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:04:00.3660| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:06:12.7600| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:06:12.8518| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:12:23.8180| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:12:23.8779| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:12:28.0884|ERROR|Miesiac.btnSave_Click => classExcel.CreateExcel => classLog.LogException Error overwriting file C:\Users\swdowiak\Desktop\miesiac.xlsx
+   w OfficeOpenXml.ExcelPackage.Save()
+   w OfficeOpenXml.ExcelPackage.SaveAs(FileInfo file)
+   w AnalizaDll.classExcel.CreateExcel(List`1 Sklepy, String fileName) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classExcel.cs:wiersz 64
+Proces nie mo¿e uzyskaæ dostêpu do pliku „C:\Users\swdowiak\Desktop\miesiac.xlsx”, poniewa¿ jest on u¿ywany przez inny proces.
+2021-04-26 11:13:25.1067| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:13:25.1585| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:15:19.3056| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:15:19.3515| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:16:01.6381| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:16:01.7169| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:18:01.4027| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:18:01.4566| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\
+2021-04-26 11:24:58.0727| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo ====================================================================
+2021-04-26 11:24:58.1565| INFO|App.Application_Startup => MainWindow..ctor => classLog.LogInfo Odczyt z  katalogu \\ccc-v444\Statystyka\

@@ -1,0 +1,1478 @@
+2021-04-29 20:30:39.6120| INFO|Program.Main => classLog.LogInfo start 
+2021-04-29 20:30:39.6748| WARN|Program.Main => Program.DescribeProgram => classLog.LogWarn 
+Program GenerateStatistic [wersja:12.0.0.0]
+Odczytujemy dane z bazy:DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=swdowiak;
+Zapisujemy wynik katalogu C:\dyskD\wywal\testScan\Stat\
+Program z parametrem h[H]	opis programu
+Program z parametrem yyyyMMdd	zapis do pliku C:\dyskD\wywal\testScan\Stat\statystykaOracle_yyyyMMdd.csv
+Program z parametrem g 3	generowanie plików na 3 dni wstecz
+Program z parametrem m[M]	raport miesieczny za 2021 marzec
+			zapisujemy w C:\dyskD\wywal\testScan\Stat\Miesiac\
+Program z parametrem s po³¹czenie	szyfrowanie hasla
+	 parametr po³¹czenie podajemy w cudzys³owiach np:
+AnalizaSold.exe s "DATA SOURCE=10.50.20.131:1521/CCCNPOS;USER ID=u¿ytkownik;PASSWORD=haslo;PERSIST SECURITY INFO=True;"
+Historia zmian:
+10.0.0.0:
+	-HalfPrice
+11.0.0.0:
+	-Raporty miesieczne
+12.0.0.0:
+	-Powielone kwoty w raporcie miesiecznym
+
+2021-04-29 20:30:44.0784| INFO|Program.Main => classLog.LogInfo start 
+2021-04-29 20:30:44.1153| INFO|Program.Main => classLog.LogInfo Generowanie danych dla 20210428
+2021-04-29 20:30:44.9307| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:30:44.9307| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:30:44.9307| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-03-01') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-03-01') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:30:45.2014| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:30:45.2014| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:30:45.2039| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-03-01' and (lokal.datazamkniecia >'2021-03-01' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:31:26.2994| INFO|Program.Main => classLog.LogInfo start 
+2021-04-29 20:31:26.3473| INFO|Program.Main => classLog.LogInfo Generowanie danych dla 20210428
+2021-04-29 20:31:27.1461| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:31:27.1461| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:31:27.1461| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-03-01') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-03-01') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:31:27.6401| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:31:27.6411| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:31:27.6411| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-03-01' and (lokal.datazamkniecia >'2021-03-01' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:31:38.9110| INFO|Program.Main => classLog.LogInfo start 
+2021-04-29 20:31:38.9529| INFO|Program.Main => classLog.LogInfo Generowanie danych dla 20210428
+2021-04-29 20:31:39.5156| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:31:39.5176| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:31:39.5176| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-22') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-22') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:31:39.7524| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:31:39.7524| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:31:39.7524| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-22' and (lokal.datazamkniecia >'2021-04-22' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:32:04.3154| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210422.csv
+2021-04-29 20:32:04.3154| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:32:04.3154| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:32:04.3154| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-23') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-23') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:32:04.4280| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:32:04.4280| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:32:04.4280| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-23' and (lokal.datazamkniecia >'2021-04-23' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:33:22.9025| INFO|Program.Main => classLog.LogInfo start 
+2021-04-29 20:33:22.9414| INFO|Program.Main => classLog.LogInfo Generowanie danych dla 20210428
+2021-04-29 20:33:23.4860| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:33:23.4860| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:33:23.4860| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-22') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-22') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:33:23.7359| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:33:23.7359| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:33:23.7359| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-22' and (lokal.datazamkniecia >'2021-04-22' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:33:27.6755| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210422.csv
+2021-04-29 20:33:27.6755| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:33:27.6755| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:33:27.6755| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-23') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-23') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:33:27.7887| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:33:27.7887| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:33:27.7887| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-23' and (lokal.datazamkniecia >'2021-04-23' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:33:49.8704| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210423.csv
+2021-04-29 20:33:49.8704| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:33:49.8704| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:33:49.8764| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-24') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-24') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:33:49.9833| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:33:49.9854| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:33:49.9854| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-24' and (lokal.datazamkniecia >'2021-04-24' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:35:57.8719| INFO|Program.Main => classLog.LogInfo start 
+2021-04-29 20:35:57.9088| INFO|Program.Main => classLog.LogInfo Generowanie danych dla 20210428
+2021-04-29 20:35:58.5334| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:35:58.5334| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:35:58.5334| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-22') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-22') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:35:58.7788| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:35:58.7788| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:35:58.7788| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-22' and (lokal.datazamkniecia >'2021-04-22' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:36:02.4321| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210422.csv
+2021-04-29 20:36:02.4401| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:02.4401| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:36:02.4401| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-23') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-23') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:36:02.5444| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:02.5444| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:36:02.5444| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-23' and (lokal.datazamkniecia >'2021-04-23' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:36:06.3044| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210423.csv
+2021-04-29 20:36:06.3044| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:06.3044| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:36:06.3044| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-24') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-24') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:36:06.4104| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:06.4104| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:36:06.4104| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-24' and (lokal.datazamkniecia >'2021-04-24' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:36:19.0225| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210424.csv
+2021-04-29 20:36:19.0225| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:19.0225| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:36:19.0225| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-25') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-25') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:36:19.1392| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:19.1392| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:36:19.1392| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-25' and (lokal.datazamkniecia >'2021-04-25' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:36:38.5954| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210425.csv
+2021-04-29 20:36:38.5954| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:38.5954| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:36:38.5954| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-26') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-26') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:36:38.7029| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:38.7029| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:36:38.7059| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-26' and (lokal.datazamkniecia >'2021-04-26' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:36:42.5283| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210426.csv
+2021-04-29 20:36:42.5283| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:42.5283| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:36:42.5335| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-27') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-27') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:36:42.6396| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:42.6396| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:36:42.6446| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-27' and (lokal.datazamkniecia >'2021-04-27' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:36:56.7957| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210427.csv
+2021-04-29 20:36:56.7957| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:56.7997| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:36:56.7997| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-28') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-28') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:36:56.9038| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:36:56.9038| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:36:56.9038| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-28' and (lokal.datazamkniecia >'2021-04-28' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:37:12.5142| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210428.csv
+2021-04-29 20:40:23.3157| INFO|Program.Main => classLog.LogInfo start 
+2021-04-29 20:40:23.3546| INFO|Program.Main => classLog.LogInfo Generowanie danych dla 20210428
+2021-04-29 20:40:24.0496| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:24.0496| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:40:24.0496| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-22') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-22') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:40:24.2871| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:24.2871| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:40:24.2871| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-22' and (lokal.datazamkniecia >'2021-04-22' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:40:28.9707| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210422.csv
+2021-04-29 20:40:28.9794| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:28.9794| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:40:28.9794| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-23') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-23') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:40:29.0886| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:29.0886| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:40:29.0886| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-23' and (lokal.datazamkniecia >'2021-04-23' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:40:33.9160| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210423.csv
+2021-04-29 20:40:33.9160| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:33.9160| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:40:33.9160| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-24') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-24') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:40:34.0239| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:34.0239| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:40:34.0239| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-24' and (lokal.datazamkniecia >'2021-04-24' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:40:38.6309| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210424.csv
+2021-04-29 20:40:38.6309| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:38.6309| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:40:38.6309| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-25') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-25') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:40:38.7458| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:38.7458| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:40:38.7458| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-25' and (lokal.datazamkniecia >'2021-04-25' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:40:43.8663| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210425.csv
+2021-04-29 20:40:43.8663| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:43.8663| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:40:43.8663| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-26') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-26') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:40:43.9795| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:43.9795| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:40:43.9795| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-26' and (lokal.datazamkniecia >'2021-04-26' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:40:48.4176| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210426.csv
+2021-04-29 20:40:48.4176| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:48.4176| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:40:48.4176| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-27') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-27') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:40:48.5319| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:48.5337| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:40:48.5337| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-27' and (lokal.datazamkniecia >'2021-04-27' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:40:53.4630| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210427.csv
+2021-04-29 20:40:53.4630| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:53.4630| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy sprzedaz
+2021-04-29 20:40:53.4630| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo with terminalTR as(select k.id KasaId,
+sum(
+CASE
+WHEN (dt.symbol='FVKOR' or dt.symbol='PARKOR') THEN -1*nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+
+ELSE nvl2(t.amountinterminalcurrency,t.amountinterminalcurrency,t.amount)
+END) as Terminal
+
+from POS.nposterminaltransakcja t
+INNER JOIN pos.NPosDokument d on t.dokumentid=d.id and  t.issuccess=1
+inner join pos.nposdzien dz on d.dzienid=dz.id
+inner join POS.nposdokumenttyp dt on d.dokumenttypid=dt.id
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id 
+inner join POS.nposkasa k on k.stanowiskoid=st.id
+where  (dz.Data='2021-04-28') and
+ t.issuccess=1
+ group by k.id),
+ ksiegowa as (SELECT  
+  l.Symbol AS NumerSklep,
+
+  st.Nr as Stanowisko,
+  formaPlat.id as formaPlatid,
+  sum(tot.Netto) as netto, 
+  sum(tot.Brutto) as brutto, 
+  sum(tot.Vat) as vat,    
+  sum(tot.Ilosc) as ilosc,
+ dz.id dzienid,
+ kasa.Id kasid 
+FROM pos.NSysLokal l
+INNER JOIN pos.NPosDzien dz ON dz.LokalID= l.ID
+INNER JOIN pos.NPosDokument d ON d.DzienID= dz.ID AND d.FlgImportowany= 0
+inner join POS.nsysstanowisko st on d.stanowiskoid=st.id
+inner join POS.nposkasa kasa on st.id=kasa.stanowiskoid
+INNER JOIN pos.NPosDokumentTyp dt ON dt.ID= d.DokumentTypID AND  dt.FlgTyp= 1 AND dt.FlgRodzajSpr= 0 AND dt.FlgKorekta= 0
+INNER JOIN pos.NSysOperator oper ON oper.ID= d.OperatorID
+inner join POS.nposplatnoscforma formaPlat on formaPlat.flgtyp=1
+LEFT JOIN pos.NPosDokumentTotalizer tot ON tot.DokumentID= d.ID
+
+left join pos.nsyskraj kr on l.krajid = kr.id
+
+WHERE
+
+    (kr.symbol = 'PL')  and
+   --l.nr=1146 and
+   l.opis not like ('Gino%') and
+    (dz.Data='2021-04-28') group by   l.Symbol,st.Nr,dz.id,kasa.id,formaPlat.id)select 
+    ksiegowa.numersklep,ksiegowa.stanowisko,max(ksiegowa.brutto) Brutto,sum(plat.utarg) Karta,max(
+    CASE
+WHEN tg.terminal is  NULL THEN 0.0
+
+ELSE tg.terminal
+END) Terminal  from ksiegowa
+    left join terminalTR tg on ksiegowa.kasid=tg.kasaid
+    left join POS.nposzmianatotalizer plat on plat.kasaid=ksiegowa.kasid and plat.dzienid=ksiegowa.dzienid
+  and plat.platnoscformaid=ksiegowa.formaPlatid
+
+group by ksiegowa.numersklep,ksiegowa.stanowisko
+2021-04-29 20:40:53.5772| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo ====================================================================================================
+2021-04-29 20:40:53.5772| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo Sklepy
+2021-04-29 20:40:53.5772| INFO|Program.Main => classFun.SoldOracle => classLog.LogInfo SELECT Lokal.symbol NumerSklep,s.Nr Stanowisko,lokal.opis as ShopName
+FROM POS.NSYSLOKAL Lokal
+join POS.nsysstanowisko s on s.lokalid=Lokal.id
+INNER JOIN POS.NSYSKRAJ Kraj on kraj.id = lokal.krajid
+WHERE lokal.opis not like ('%Gino%')
+and lokal.dataotwarcia <'2021-04-28' and (lokal.datazamkniecia >'2021-04-28' or trunc(lokal.datazamkniecia) = '1900-01-01' )and kraj.symbol ='PL' and lokal.Nr not in(0,4000,199999,1732,3235,2308) and s.nazwa like 'POS%'
+order by 1,2
+2021-04-29 20:40:58.3783| INFO|Program.Main => Program.SaveOracleToFile => classLog.LogInfo Zapis do katalogu C:\dyskD\wywal\testScan\Stat\statystykaOracle_20210428.csv

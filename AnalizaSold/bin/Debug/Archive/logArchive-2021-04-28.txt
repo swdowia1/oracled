@@ -1,0 +1,65 @@
+2021-04-27 20:42:56.2005| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 20:42:56.2367| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 20:42:56.2367| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 20:42:56.2367| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 20:42:56.2367| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-27 20:42:56.2367| WARN|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogWarn Brak plików za 202103 w katalogu C:\dyskD\wywal\testScan\Stat\
+2021-04-27 20:44:47.6105| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 20:44:47.6474| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 20:44:47.6474| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 20:44:47.6474| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 20:44:47.6474| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-27 20:44:47.7897|ERROR|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogException Nieprawid³owy format ci¹gu wejœciowego.
+   w System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   w System.Number.ParseDecimal(String value, NumberStyles options, NumberFormatInfo numfmt)
+   w System.Decimal.Parse(String s, IFormatProvider provider)
+   w AnalizaDll.classFun.GetDecimal(String v) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 819
+   w AnalizaDll.classFun.GenerateMiesiac(String source, String dest, String monthPrev) w C:\dyskD\praca\kody\AnalizaSold\AnalizaDll\classFun.cs:wiersz 196
+2021-04-27 20:48:35.1866| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 20:48:37.8086| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 20:48:40.0824| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 20:48:40.0824| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 20:48:40.0824| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-27 20:51:28.8596| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 20:51:28.9264| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 20:51:28.9264| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 20:51:28.9264| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 20:51:28.9264| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-27 20:52:50.2810|ERROR|classFun.GenerateMiesiac => classFun.GetDecimal => classLog.LogError C:\dyskD\wywal\testScan\Stat\statystyka_20210310.csv 
+2021-04-27 20:52:53.4256|ERROR|classFun.GenerateMiesiac => classFun.GetDecimal => classLog.LogError C:\dyskD\wywal\testScan\Stat\statystyka_20210313.csv 
+2021-04-27 20:59:21.7840| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 20:59:21.8438| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 20:59:21.8488| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 20:59:21.8488| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 20:59:21.8488| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202103
+2021-04-27 20:59:25.5435|ERROR|classFun.GenerateMiesiac => classFun.GetDecimal => classLog.LogError C:\dyskD\wywal\testScan\Stat\statystyka_20210310.csv 2021-04-27 14:08:48;NotOnline;2481;;0582;20210310;
+2021-04-27 21:00:49.0207| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 21:00:49.0716| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 21:00:49.0716| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 21:00:49.0716| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 21:00:49.0716| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202104
+2021-04-27 21:02:23.9618| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 21:02:24.0037| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 21:02:24.0087| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 21:02:24.0087| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 21:02:24.0087| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202104
+2021-04-27 21:03:10.1334| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 21:03:10.1803| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 21:03:10.1803| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 21:03:10.1803| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 21:03:10.1803| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202104
+2021-04-27 21:05:48.2537| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 21:05:48.2926| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 21:05:48.2926| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 21:05:48.2926| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 21:05:48.2926| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202104
+2021-04-27 21:06:57.8716| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 21:06:57.9155| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 21:06:57.9155| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 21:06:57.9155| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 21:06:57.9155| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202104
+2021-04-27 21:15:04.8773| INFO|Program.Main => classLog.LogInfo start 
+2021-04-27 21:15:04.9312| INFO|Program.Main => Program.MiesieczneRaporty => classLog.LogInfo Generowanie raport miesieczny za 2021 marzec na wsystkie daty
+2021-04-27 21:15:04.9312| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\
+2021-04-27 21:15:04.9312| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo C:\dyskD\wywal\testScan\Stat\Miesiac\
+2021-04-27 21:15:04.9312| INFO|Program.MiesieczneRaporty => classFun.GenerateMiesiac => classLog.LogInfo 202104
